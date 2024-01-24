@@ -70,4 +70,11 @@ class AuthController extends Controller
 
         return redirect()->back()->with('error', 'Gagal login !!');
     }
+
+    public function logout(Request $request)
+    {
+        $request->session()->flush();
+        Auth::logout();
+        return Redirect()->route('view.login');
+    }
 }
