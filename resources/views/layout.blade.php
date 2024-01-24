@@ -65,49 +65,22 @@
             </div>
           </form>
           <ul class="navbar-nav navbar-right">
-            @if (Auth::user()->isAdmin())
-                <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown" class="nav-link notification-toggle" id="lonceng"><i class="far fa-bell"></i></a>
-                    <div class="dropdown-menu dropdown-list dropdown-menu-right">
-                        <div class="dropdown-header">Notifications
-                            {{-- <div class="float-right">
-                                <a href="#">Mark All As Read</a>
-                            </div> --}}
-                        </div>
-                        <div class="dropdown-list-content dropdown-list-icons" id="notifikasi">
-                        {{-- <a href="#" class="dropdown-item dropdown-item-unread">
-                            <div class="dropdown-item-icon bg-primary text-white">
-                            <i class="fas fa-code"></i>
-                            </div>
-                            <div class="dropdown-item-desc">
-                            Template update is available now!
-                            </div>
-                        </a>
-                        <a href="#" class="dropdown-item">
-                            <div class="dropdown-item-icon bg-info text-white">
-                            <i class="fas fa-bell"></i>
-                            </div>
-                            <div class="dropdown-item-desc">
-                            Welcome to Stisla template!
-                            </div>
-                        </a> --}}
-                        </div>
-                        {{-- <div class="dropdown-footer text-center">
-                        <a href="#">View All <i class="fas fa-chevron-right"></i></a>
-                        </div> --}}
-                    </div>
-                </li>
-            @endif
+              <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown" class="nav-link notification-toggle" id="lonceng"><i class="far fa-bell"></i></a>
+                  <div class="dropdown-menu dropdown-list dropdown-menu-right">
+                      <div class="dropdown-header">Notifications
+                      </div>
+                      <div class="dropdown-list-content dropdown-list-icons" id="notifikasi">
+                      </div>
+                  </div>
+              </li>
             <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
               <div class="d-sm-none d-lg-inline-block">Hi, {{ Auth::user()->name }}</div></a>
               <div class="dropdown-menu dropdown-menu-right">
                 <div class="dropdown-divider"></div>
-                <form action="{{ route('logout.login') }}" method="post">
+                <form action="{{ route('logout') }}" method="post">
                     @csrf
                     <button type="submit" class="dropdown-item text-danger"><i class="fas fa-sign-out-alt"></i> Logout</button>
                 </form>
-                {{-- <a href="#" class="dropdown-item has-icon text-danger">
-                  <i class="fas fa-sign-out-alt"></i> Logout
-                </a> --}}
               </div>
             </li>
           </ul>
@@ -126,18 +99,17 @@
             </div>
             <ul class="sidebar-menu">
               <li class="menu-header">Menu</li>
-              <li class="{{ request()->is('dashboard') ? 'active' : '' }}"><a class="nav-link" href="{{ route('dashboard') }}"><i class="fas fa-chart-bar"></i><span>Dashboard</span></a></li>
-              @if (Auth::user()->isAdmin())
-                <li class="{{ request()->is('master*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('index.master-user') }}"><i class="fas fa-users"></i><span>Master User</span></a></li>
-              @endif
-              <li class="dropdown {{ request()->is('dokumen*') ? 'active' : '' }}">
+              <li class="{{ request()->is('auth/dashboard') ? 'active' : '' }}"><a class="nav-link" href="{{ route('dashboard') }}"><i class="fas fa-chart-bar"></i><span>Dashboard</span></a></li>
+              <li class="dropdown {{ request()->is('auth/document/*') ? 'active' : '' }}">
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-file-alt"></i> <span>Data Dokumen</span></a>
                 <ul class="dropdown-menu">
-                  <li class="{{ ($menu == '1') ? 'active' : '' }}" ><a class="nav-link" href="{{ route('index.dokumen', 1) }}">MOA</a></li>
-                  <li class="{{ ($menu == '2') ? 'active' : '' }}" ><a class="nav-link" href="{{ route('index.dokumen', 2) }}">MOU</a></li>
-                  <li class="{{ ($menu == '3') ? 'active' : '' }}"><a class="nav-link" href="{{ route('index.dokumen', 3) }}">IA</a></li>
+                    <li class="{{ ($menu == '1') ? 'active' : '' }}" ><a class="nav-link" href="{{ route('index.document', 1) }}">MOA</a></li>
+                    <li class="{{ ($menu == '2') ? 'active' : '' }}" ><a class="nav-link" href="{{ route('index.document', 2) }}">MOU</a></li>
+                    <li class="{{ ($menu == '3') ? 'active' : '' }}"><a class="nav-link" href="{{ route('index.document', 3) }}">IA</a></li>
                 </ul>
-              </li>
+            </li>
+            <li class="{{ request()->is('auth/document-filter*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('filter.document') }}"><i class="fas fa-users"></i><span>Filter Dokumen</span></a></li>
+            <li class="{{ request()->is('auth/partner*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('index.partner') }}"><i class="fas fa-users"></i><span>Mitra Kerja</span></a></li>
             </ul>
         </aside>
         </div>
@@ -204,40 +176,40 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
     <script type="text/javascript">
-      $('.show_confirm').click(function(event) {
-        let form =  $(this).closest("form");
-        let name = $(this).data("name");
-        event.preventDefault();
-        swal({
-            title: 'Apakah anda yakin akan menghapus data ini !! ',
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-        })
-        .then((willDelete) => {
-            if (willDelete) {
-            form.submit();
-            }
-        });
-    });
-    $(document).ready(function(){
-        $.ajax({
-            type:"GET",
-            url:"{{ route('index.notifikasi') }}",
-            data: {},
-            dataType: 'JSON',
-            success:function(response){
-                // console.log(response);
-                $('#notifikasi').html(response.data_notifikasi);
-
-                if(response.data_readAt == 0){
-                    $('#lonceng').addClass("nav-link-lg beep");
-                }else{
-                    $('#lonceng').removeClass("nav-link-lg beep");
+        $('.show_confirm').click(function(event) {
+            let form =  $(this).closest("form");
+            let name = $(this).data("name");
+            event.preventDefault();
+            swal({
+                title: 'Apakah anda yakin akan menghapus data ini !! ',
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                form.submit();
                 }
-            }
+            });
         });
-    });
+        $(document).ready(function(){
+            $.ajax({
+                type:"GET",
+                url:"{{ route('index.notification') }}",
+                data: {},
+                dataType: 'JSON',
+                success:function(response){
+                    // console.log(response);
+                    $('#notifikasi').html(response.data_notifikasi);
+
+                    if(response.data_readAt == 0){
+                        $('#lonceng').addClass("nav-link-lg beep");
+                    }else{
+                        $('#lonceng').removeClass("nav-link-lg beep");
+                    }
+                }
+            });
+        });
     </script>
   </body>
 </html>

@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('documents', function (Blueprint $table) {
             $table->id();
-            $table->string('agency');
             $table->foreignId('type_id');
+            $table->string('agency');
             $table->string('number')->nullable();
             $table->string('title')->nullable();
             $table->string('description')->nullable();

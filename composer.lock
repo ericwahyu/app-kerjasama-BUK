@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9c491b8531eec05ba41a11d9276a5749",
+    "content-hash": "2b2be507b39192863dccff7d6f199594",
     "packages": [
         {
             "name": "brick/math",
@@ -500,6 +500,55 @@
                 }
             ],
             "time": "2023-10-06T06:47:41+00:00"
+        },
+        {
+            "name": "frosya-labs/id-date-formatter",
+            "version": "v1.2.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/frosya-labs/id-date-formatter.git",
+                "reference": "517a17b4603a5c3c27c23eb6836947766cc268d0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/frosya-labs/id-date-formatter/zipball/517a17b4603a5c3c27c23eb6836947766cc268d0",
+                "reference": "517a17b4603a5c3c27c23eb6836947766cc268d0",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "FrosyaLabs\\": "src/FrosyaLabs"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nanang Fakhrur Rozi",
+                    "email": "nfrozy@gmail.com",
+                    "homepage": "https://nfrozi.blogspot.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Date formatter for Bahasa Indonesia",
+            "homepage": "https://github.com/frosya-labs/id-date-formatter",
+            "keywords": [
+                "bahasa",
+                "date",
+                "formatter",
+                "indonesia"
+            ],
+            "support": {
+                "issues": "https://github.com/frosya-labs/id-date-formatter/issues",
+                "source": "https://github.com/frosya-labs/id-date-formatter/tree/master"
+            },
+            "time": "2020-02-06T10:16:17+00:00"
         },
         {
             "name": "fruitcake/php-cors",

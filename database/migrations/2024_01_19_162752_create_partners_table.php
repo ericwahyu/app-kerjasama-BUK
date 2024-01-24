@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_notifications', function (Blueprint $table) {
+        Schema::create('partners', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id');
-            $table->foreignId('notification_id');
-            $table->foreignId('document_id');
-            $table->boolean('read_at')->default(0);
+            $table->string('agency_name');
+            $table->text('address');
+            $table->string('country');
+            $table->bigInteger('phone');
+            $table->string('website')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -27,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_notifications');
+        Schema::dropIfExists('partners');
     }
 };

@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DocumentController;
+use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\PartnerController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,12 +29,10 @@ Route::controller(AuthController::class)->prefix('/no-auth')->group(function () 
 
 Route::middleware('auth')->prefix('/auth')->group(function () {
     Route::get('/dashboard', function () {
-        $countUser = 2;
-        $countMOA = 2;
-        $countMOU = 2;
-        $countIA = 2;
+        $countMOA  = 2;
+        $countMOU  = 2;
+        $countIA   = 2;
         return view('dashboard', array(
-            // 'countUser' => count($countUser),
             // 'countMOA' => count($countMOA),
             // 'countMOU' => count($countMOU),
             // 'countIA' => count($countIA),
@@ -40,6 +40,27 @@ Route::middleware('auth')->prefix('/auth')->group(function () {
         ));})->name('dashboard');
 
     Route::controller(DocumentController::class)->prefix('/document')->group(function () {
-
+        Route::get('/{type}', 'index')->name('index.document');
+        Route::get('/create/{type}', 'create')->name('create.document');
+        Route::post('/store', 'store')->name('store.document');
+        Route::get('/show/{document}', 'show')->name('show.document');
+        Route::get('/edit/{document}', 'edit')->name('edit.document');
+        Route::post('/update/{document}', 'update')->name('update.document');
+        Route::delete('/destroy/{document}', 'destroy')->name('destroy.document');
     });
+
+    Route::get('/document-filter', [DocumentController::class, 'filter'])->name('filter.document');
+
+    Route::controller(PartnerController::class)->prefix('/partner')->group(function () {
+        route::get('/', 'index')->name('index.partner');
+        route::get('/create', 'create')->name('create.partner');
+        route::post('/store', 'store')->name('store.partner');
+        route::get('/edit/{partner}', 'edit')->name('edit.partner');
+        route::post('/update/{partner}', 'update')->name('update.partner');
+        route::delete('/destroy/{partner}', 'destroy')->name('destroy.partner');
+    });
+
+    Route::get('/notification', [NotificationController::class, 'index'])->name('index.notification');
+
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });

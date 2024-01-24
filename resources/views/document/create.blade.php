@@ -1,19 +1,19 @@
 @extends('layout')
-@section('title', 'Tambah Data Dokumen '.$jenis->nama)
+@section('title', 'Tambah Data Dokumen '.$type->name)
 @section('section')
 <section class="section">
     <div class="section-header">
         <div class="section-header-back">
-            <a href="{{ route('index.dokumen', $jenis->id) }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
+            <a href="{{ route('index.document', $type->id) }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
         </div>
-        <h1>Tambah Data Dokumen <b>{{ $jenis->nama }}</b></h1>
+        <h1>Tambah Data Dokumen <b>{{ $type->name }}</b></h1>
     </div>
     <div class="section-body">
-        <form action="{{ route('store.dokumen') }}" method="post">
+        <form action="{{ route('store.document', $type->id) }}" method="post">
             @csrf
             <div class="card">
                 <div class="card-body">
-                    <input type="hidden" name="jenis_id" value="{{ $jenis->id }}">
+                    <input type="hidden" name="jenis_id" value="{{ $type->id }}">
                     <div class="form-group">
                         <label style="font-size: 16px" class="d-block">Instansi</label>
                         <textarea name="instansi" class="form-control @error('instansi') is-invalid @enderror" cols="30" rows="10" autofocus>{{ old('instansi') }}</textarea>
