@@ -177,7 +177,7 @@ class DocumentController extends Controller
 
         $menu = 'document';
         if($request->input('tahun') != null && $request->input('status') != null){
-            $filter_document = Document::whereYear('created_at',$request->input('tahun'))->whereStatus($request->input('status'))->get();
+            $filter_document = Document::whereYear('start_date',$request->input('tahun'))->whereStatus($request->input('status'))->get();
 
         }else{
             $filter_document = Document::all();
