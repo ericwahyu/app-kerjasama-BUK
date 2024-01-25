@@ -174,10 +174,13 @@ class DocumentController extends Controller
 
     public function filter(Request $request)
     {
-        $filter_document = Document::all();
+
         $menu = 'document';
-        if($request->tahun){
-            $filter_document = Document::whereYear('created_at',$request->tahun)->whereStatus($request->status)->get();
+        if($request->input('tahun') != null && $request->input('status') != null){
+            $filter_document = Document::whereYear('created_at',$request->input('tahun'))->whereStatus($request->input('status'))->get();
+
+        }else{
+            $filter_document = Document::all();
         }
 
         return view('filter document.index', compact('menu', 'filter_document', 'request'));

@@ -19,14 +19,15 @@
                                 <label style="font-size: 16px">Status Dokumen</label>
                                 <select class="form-control" name="status">
                                     <option disabled selected>-- Pilih Status Dokumen --</option>
-                                    <option value="1" {{ old('status') == 1 ? "selected" : "" }}">Aktif</option>
-                                    <option value="0" {{ old('status') == 0 ? "selected" : "" }}">Kadaluarsa</option>
+                                    <option value="1" {{ $request->status == '1' ? "selected" : "" }}>Aktif</option>
+                                    <option value="0" {{ $request->status == '0' ? "selected" : "" }}>Kadaluarsa</option>
+                                    <option value="" >Hapus Filter</option>
                                 </select>
                                 {{-- <input type="number" class="form-control @error('tahun') is-invalid @enderror" name="tahun" min="2020" max="3000" value="{{ $request->tahun }}"> --}}
                             </div>
                             <div class="form-group col-md-3">
                                 <button type="submit" class="btn btn-primary" style="margin-top: 35px">Filter Data</button>
-                                <a href="" class="btn btn-info" style="margin-top: 35px; margin-left: 20px">Export Excel</a>
+                                {{-- <a href="" class="btn btn-info" style="margin-top: 35px; margin-left: 20px">Export Excel</a> --}}
                             </div>
                         </div>
                     </form>
