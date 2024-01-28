@@ -184,6 +184,7 @@ class DocumentController extends Controller
     {
 
         $menu = 'document';
+        $type = Type::all();
 
         $document = Document::query();
 
@@ -202,6 +203,11 @@ class DocumentController extends Controller
 
         }
 
+        if($request->input('type_id') != null){
+            $document->whereTypeId($request->input('type_id'));
+
+        }
+
         if($request->input('status') != null){
             $document->whereStatus($request->input('status'));
 
@@ -209,7 +215,7 @@ class DocumentController extends Controller
 
         $filter_document = $document->get();
 
-        return view('filter document.index', compact('menu', 'filter_document', 'request'));
+        return view('filter document.index', compact('menu', 'filter_document', 'request', 'type'));
     }
 
     public function export(Request $request)
@@ -228,6 +234,11 @@ class DocumentController extends Controller
 
         if($request->input('prodi') != null){
             $document->whereCourse($request->input('prodi'));
+
+        }
+
+        if($request->input('type_id') != null){
+            $document->whereTypeId($request->input('type_id'));
 
         }
 
