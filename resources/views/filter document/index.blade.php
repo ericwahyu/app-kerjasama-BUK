@@ -11,19 +11,29 @@
                 <div class="table-responsive">
                     <form method="get">
                         <div class="row">
-                            <div class="form-group col-md-2">
+                            <div class="form-group col-md-1">
                                 <label style="font-size: 16px">Tahun Dokumen</label>
-                                <input type="number" class="form-control @error('tahun') is-invalid @enderror" name="tahun" min="2010" max="3000" value="{{ $request->tahun }}">
+                                <input type="number" class="form-control" name="tahun" min="2010" max="3000" value="{{ $request->tahun }}">
                             </div>
-                            <div class="form-group col-md-2">
+                            <div class="form-group col-md-2" style="margin-top: 25px">
                                 <label style="font-size: 16px">Fakultas</label>
-                                <input type="text" class="form-control @error('fakultas') is-invalid @enderror" name="fakultas" min="2010" max="3000" value="{{ $request->fakultas }}">
+                                <input type="text" class="form-control" name="fakultas" value="{{ $request->fakultas }}">
                             </div>
-                            <div class="form-group col-md-2">
+                            <div class="form-group col-md-2" style="margin-top: 25px">
                                 <label style="font-size: 16px">Program Studi</label>
-                                <input type="text" class="form-control @error('prodi') is-invalid @enderror" name="prodi" min="2010" max="3000" value="{{ $request->prodi }}">
+                                <input type="text" class="form-control" name="prodi" value="{{ $request->prodi }}">
                             </div>
-                            <div class="form-group col-md-2">
+                            <div class="form-group col-md-2" style="margin-top: 25px">
+                                <label style="font-size: 16px">Jenis Dokumen</label>
+                                <select class="form-control" name="type_id">
+                                    <option disabled selected>-- Pilih Jenis Dokumen --</option>
+                                    @foreach ($type as $type)
+                                        <option value="{{ $type->id }}" {{ $request->type_id == $type->id ? "selected" : "" }}>{{ $type->name }}</option>
+                                    @endforeach
+                                    <option value="" >Hapus Filter</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-2" style="margin-top: 25px">
                                 <label style="font-size: 16px">Status Dokumen</label>
                                 <select class="form-control" name="status">
                                     <option disabled selected>-- Pilih Status Dokumen --</option>
@@ -33,9 +43,9 @@
                                 </select>
                                 {{-- <input type="number" class="form-control @error('tahun') is-invalid @enderror" name="tahun" min="2020" max="3000" value="{{ $request->tahun }}"> --}}
                             </div>
-                            <div class="form-group col-md-3">
+                            <div class="form-group col-md-3" style="margin-top: 25px">
                                 <button formaction="{{ route('filter.document') }}" type="submit" class="btn btn-primary" style="margin-top: 35px">Filter Data</button>
-                                <button formaction="{{ route('export.document') }}" type="submit" class="btn btn-info" style="margin-top: 35px; margin-left: 35px">Export Excel</button>
+                                <button formaction="{{ route('export.document') }}" type="submit" class="btn btn-info" style="margin-top: 35px; margin-left: 10px">Export Excel</button>
                             </div>
                         </div>
                     </form>
