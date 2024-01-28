@@ -108,7 +108,7 @@
                     <li class="{{ ($menu == '3') ? 'active' : '' }}"><a class="nav-link" href="{{ route('index.document', 3) }}">IA</a></li>
                 </ul>
             </li>
-            <li class="{{ request()->is('auth/document-filter*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('filter.document') }}"><i class="fas fa-users"></i><span>Filter Dokumen</span></a></li>
+            <li class="{{ request()->is('auth/document-filter*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('filter.document') }}"><i class="fas fa-folder-open"></i><span>Filter Dokumen</span></a></li>
             <li class="{{ request()->is('auth/partner*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('index.partner') }}"><i class="fas fa-users"></i><span>Mitra Kerja</span></a></li>
             </ul>
         </aside>

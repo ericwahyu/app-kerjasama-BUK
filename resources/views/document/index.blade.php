@@ -21,6 +21,13 @@
                                 <th>Instansi</th>
                                 <th>Nomor Dokumen</th>
                                 <th>Judul</th>
+                                @if ($type->id == 1)
+                                    <th>Fakultas</th>
+
+                                @elseif ($type->id == 3)
+                                    <th>Program Studi</th>
+
+                                @endif
                                 <th>Keterangan</th>
                                 <th>Mitra</th>
                                 <th>Kegiatan</th>
@@ -41,16 +48,24 @@
                                     <td>{{ $data->type->name }}</td>
                                     <td>{{ $data->agency }}</td>
                                     <td>{{ $data->number }}</td>
-                                    <td>{{ $data->title }}</td>
-                                    <td>{{ $data->description }}</td>
+                                    <td>{!! Str::limit($data->title, 100, ' ...') !!}</td>
+                                    @if ($type->id == 1)
+                                        <td>{{ $data->faculty }}</td>
+
+                                    @elseif ($type->id == 3)
+                                        <td>{{ $data->course }}</td>
+
+                                    @endif
+                                    {{-- <td>{{ $data->description }}</td> --}}
+                                    <td>{!! Str::limit($data->description, 100, ' ...') !!}</td>
                                     <td>{{ $data->partner }}</td>
-                                    <td>{{ $data->activity }}</td>
+                                    <td>{!! Str::limit($data->activity, 100, ' ...') !!}</td>
                                     <td>{{ IdDateFormatter::format($data->start_date, IdDateFormatter::COMPLETE) }}</td>
                                     <td>{{ IdDateFormatter::format($data->end_date, IdDateFormatter::COMPLETE) }}</td>
-                                    @if ($data->status == 0)
-                                        <td><span class="badge badge-danger">Kadaluarsa</span></td>
-                                    @elseif ($data->status == 1)
+                                    @if ($data->status == 'aktif')
                                         <td><span class="badge badge-success">Aktif</span></td>
+                                    @elseif ($data->status == 'kadaluarsa')
+                                        <td><span class="badge badge-danger">Kadaluarsa</span></td>
                                     @endif
                                     <td>
                                         <a href="{{ route('show.document', $data->id) }}" class="btn btn-success" title="Detail Data"><i class="fa fa-eye"></i></a>

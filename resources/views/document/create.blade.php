@@ -43,6 +43,29 @@
                             @enderror
                         </div>
                     </div>
+                    @if ($type->id == 1)
+                        <div class="form-group">
+                            <label style="font-size: 16px" class="d-block">Fakultas</label>
+                            <input type="text" class="form-control @error('fakultas') is-invalid @enderror" name="fakultas" value="{{ old('fakultas') }}">
+                            @error('fakultas')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+
+                    @elseif ($type->id == 3)
+                        <div class="form-group">
+                            <label style="font-size: 16px" class="d-block">Program Studi</label>
+                            <input type="text" class="form-control @error('prodi') is-invalid @enderror" name="prodi" value="{{ old('prodi') }}">
+                            @error('prodi')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+
+                    @endif
                     <div class="form-group">
                         <label style="font-size: 16px" class="d-block">Keterangan</label>
                         <textarea name="keterangan" class="form-control @error('keterangan') is-invalid @enderror" cols="30" rows="10" autofocus>{{ old('keterangan') }}</textarea>

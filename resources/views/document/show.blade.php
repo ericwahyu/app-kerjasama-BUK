@@ -52,11 +52,11 @@
                                 <tr>
                                     <td>Status</td>
                                     <td>:</td>
-                                    <td> @if ($document->status == 0)
-                                        <span class="badge badge-danger">Kadaluarsa</span>
-                                    @elseif ($document->status == 1)
-                                        <span class="badge badge-success">Aktif</span>
-                                    @endif</td>
+                                    @if ($document->status === 'aktif')
+                                        <td><span class="badge badge-success">Aktif</span></td>
+                                    @elseif ($document->status == 'kadaluarsa')
+                                        <td><span class="badge badge-danger">Kadaluarsa</span></td>
+                                    @endif
                                 </tr>
                                 <tr>
                                     <td>Tanggal Awal</td>

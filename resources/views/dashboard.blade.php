@@ -17,7 +17,7 @@
                                 <h4>Data Memorandum of Aggreement (MoA)</h4>
                             </div>
                             <div class="card-body">
-                                {{-- {{ $countMOA }} --}}
+                                {{ $countMOA }}
                             </div>
                         </div>
                     </div>
@@ -34,7 +34,7 @@
                                 <h4>Data Memorandum of Understanding (MoU)</h4>
                             </div>
                             <div class="card-body">
-                                {{-- {{ $countMOU }} --}}
+                                {{ $countMOU }}
                             </div>
                         </div>
                     </div>
@@ -51,7 +51,7 @@
                                 <h4>Data Implementation Arrangement (IA)</h4>
                             </div>
                             <div class="card-body">
-                                {{-- {{ $countIA }} --}}
+                                {{ $countIA }}
                             </div>
                         </div>
                     </div>

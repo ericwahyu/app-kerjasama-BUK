@@ -33,7 +33,7 @@ class NotificationDocument extends Command
     {
         //
         $userAdmin = User::all();
-        $data = Document::whereStatus(1)->get();
+        $data = Document::whereStatus('aktif')->get();
 
         $start = Carbon::parse(date('Y-m-d', strtotime(Carbon::now())));;
 
@@ -60,7 +60,7 @@ class NotificationDocument extends Command
             }elseif($user_notifikasi){
                 if($countDay <= 1){
                     $dokumen = Document::find($datas->id);
-                    $dokumen->status = 0;
+                    $dokumen->status = 'kadaluarsa';
                     $dokumen->save();
 
                     foreach($userAdmin as $admin){
@@ -79,7 +79,7 @@ class NotificationDocument extends Command
 
             if($datas->end_date <= Carbon::now()->format('Y-m-d')){
                 $dokumen = Document::find($datas->id);
-                $dokumen->status = 0;
+                $dokumen->status = 'kadaluarsa';
                 $dokumen->save();
 
                 foreach($userAdmin as $admin){

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\DocumentExport;
 use App\Models\Document;
 use App\Models\Notification;
 use App\Models\Type;
@@ -10,6 +11,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class DocumentController extends Controller
 {
@@ -45,6 +47,7 @@ class DocumentController extends Controller
     public function store(Request $request)
     {
         //
+        // dd($request);
         $request->validate([
             'instansi' => 'required',
             'tglAwal' => 'required',
@@ -59,13 +62,15 @@ class DocumentController extends Controller
                     $document->agency      = $request->instansi;
                     $document->number      = $request->nomor;
                     $document->title       = $request->judul;
+                    $document->faculty     = $request->fakultas;
+                    $document->course      = $request->prodi;
                     $document->description = $request->keterangan;
                     $document->partner     = $request->mitra;
                     $document->activity    = $request->kegiatan;
                     if($request->tglAkhir > Carbon::now()->format('Y-m-d')){
-                        $document->status = 1;
+                        $document->status = 'aktif';
                     }else{
-                        $document->status = 0;
+                        $document->status = 'kadaluarsa';
                     }
                     $document->start_date = $request->tglAwal;
                     $document->end_date   = $request->tglAkhir;
@@ -91,6 +96,7 @@ class DocumentController extends Controller
     public function show(Document $document)
     {
         //
+        // dd($document);
         $nav = 'dokumen';
         $menu = $document->type->id;
 
@@ -123,7 +129,7 @@ class DocumentController extends Controller
     public function update(Request $request, Document $document)
     {
         //
-        // dd($document->type->id);
+        // dd($request);
         $request->validate([
             'instansi' => 'required',
             'tglAwal' => 'required',
@@ -136,13 +142,15 @@ class DocumentController extends Controller
                     $document->agency      = $request->instansi;
                     $document->number      = $request->nomor;
                     $document->title       = $request->judul;
+                    $document->faculty     = $request->fakultas;
+                    $document->course      = $request->prodi;
                     $document->description = $request->keterangan;
                     $document->partner     = $request->mitra;
                     $document->activity    = $request->kegiatan;
                     if($request->tglAkhir > Carbon::now()->format('Y-m-d')){
-                        $document->status = 1;
+                        $document->status = 'aktif';
                     }else{
-                        $document->status = 0;
+                        $document->status = 'kadaluarsa';
                     }
                     $document->start_date = $request->tglAwal;
                     $document->end_date   = $request->tglAkhir;
@@ -176,22 +184,75 @@ class DocumentController extends Controller
     {
 
         $menu = 'document';
-        if($request->input('tahun') != null && $request->input('status') != null){
-            $filter_document = Document::whereYear('start_date',$request->input('tahun'))->whereStatus($request->input('status'))->get();
 
-        }elseif($request->input('tahun') != null && $request->input('status') == null){
-            $filter_document = Document::whereYear('start_date',$request->input('tahun'))->get();
+        $document = Document::query();
 
-        }elseif($request->input('tahun') == null && $request->input('status') != null){
-            $filter_document = Document::whereStatus($request->input('status'))->get();
+        if($request->input('tahun') != null){
+            $document->whereYear('start_date',$request->input('tahun'));
 
-        }elseif($request->input('tahun') == null && $request->input('status') == null){
-            $filter_document = Document::all();
-
-        }else{
-            $filter_document = Document::all();
         }
 
+        if($request->input('fakultas') != null){
+            $document->whereFaculty($request->input('fakultas'));
+
+        }
+
+        if($request->input('prodi') != null){
+            $document->whereCourse($request->input('prodi'));
+
+        }
+
+        if($request->input('status') != null){
+            $document->whereStatus($request->input('status'));
+
+        }
+
+        $filter_document = $document->get();
+
         return view('filter document.index', compact('menu', 'filter_document', 'request'));
+    }
+
+    public function export(Request $request)
+    {
+        $document = Document::query();
+
+        if($request->input('tahun') != null){
+            $document->whereYear('start_date',$request->input('tahun'));
+
+        }
+
+        if($request->input('fakultas') != null){
+            $document->whereFaculty($request->input('fakultas'));
+
+        }
+
+        if($request->input('prodi') != null){
+            $document->whereCourse($request->input('prodi'));
+
+        }
+
+        if($request->input('status') != null){
+            $document->whereStatus($request->input('status'));
+
+        }
+
+        $document = $document->select(
+                        'documents.agency',
+                        'types.name as type_id',
+                        'documents.number',
+                        'documents.title',
+                        'documents.faculty',
+                        'documents.course',
+                        'documents.description',
+                        'documents.partner',
+                        'documents.activity',
+                        'documents.status',
+                        'documents.start_date',
+                        'documents.end_date',
+                        )
+                        ->join('types', 'types.id', 'documents.type_id')
+                        ->get();
+
+        return Excel::download(new DocumentExport($document), 'document.xlsx');
     }
 }

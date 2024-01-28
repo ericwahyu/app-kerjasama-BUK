@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PartnerController;
+use App\Models\Document;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,13 +30,13 @@ Route::controller(AuthController::class)->prefix('/no-auth')->group(function () 
 
 Route::middleware('auth')->prefix('/auth')->group(function () {
     Route::get('/dashboard', function () {
-        $countMOA  = 2;
-        $countMOU  = 2;
-        $countIA   = 2;
+        $countMOA  = Document::whereTypeId(1)->get();
+        $countMOU  = Document::whereTypeId(2)->get();
+        $countIA   = Document::whereTypeId(3)->get();
         return view('dashboard', array(
-            // 'countMOA' => count($countMOA),
-            // 'countMOU' => count($countMOU),
-            // 'countIA' => count($countIA),
+            'countMOA' => count($countMOA),
+            'countMOU' => count($countMOU),
+            'countIA' => count($countIA),
             'menu' => '1234567890',
         ));})->name('dashboard');
 
@@ -50,6 +51,7 @@ Route::middleware('auth')->prefix('/auth')->group(function () {
     });
 
     Route::get('/document-filter', [DocumentController::class, 'filter'])->name('filter.document');
+    Route::get('/document-export', [DocumentController::class, 'export'])->name('export.document');
 
     Route::controller(PartnerController::class)->prefix('/partner')->group(function () {
         route::get('/', 'index')->name('index.partner');

@@ -16,11 +16,13 @@ return new class extends Migration
             $table->foreignId('type_id');
             $table->string('agency');
             $table->string('number')->nullable();
-            $table->string('title')->nullable();
-            $table->string('description')->nullable();
-            $table->string('partner')->nullable();
-            $table->string('activity')->nullable();
-            $table->integer('status');
+            $table->text('title')->nullable();
+            $table->string('faculty')->nullable();
+            $table->string('course')->nullable();
+            $table->text('description')->nullable();
+            $table->text('partner')->nullable();
+            $table->text('activity')->nullable();
+            $table->enum('status', ['aktif', 'kadaluarsa'])->nullable();
             $table->date('start_date');
             $table->date('end_date');
             $table->timestamps();
