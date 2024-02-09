@@ -18,9 +18,9 @@
                         <label style="font-size: 16px" class="d-block">Instansi</label>
                         <textarea name="instansi" class="form-control @error('instansi') is-invalid @enderror" cols="30" rows="10" autofocus>{{ old('instansi') }}</textarea>
                         @error('instansi')
-                        <div class="invalid-feedback">
-                            {{ $message }}
-                        </div>
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
                         @enderror
                     </div>
                     <div class="row">

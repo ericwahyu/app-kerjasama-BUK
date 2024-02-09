@@ -44,25 +44,45 @@
                                 @endif
 
                                     <div class="card-body">
-                                        <form method="POST" action="{{ route('send.registrasi') }}" class="needs-validation" novalidate="">
+                                        <form method="POST" action="{{ route('send.register') }}" class="needs-validation">
                                             @csrf
                                             <div class="form-group">
                                                 <label for="text">Name</label>
-                                                <input id="text" type="text" class="form-control" name="name" tabindex="1" required autofocus>
+                                                <input id="text" type="text" class="form-control @error('name') is-invalid @enderror" name="name" tabindex="1" value="{{ old('name') }}" autofocus>
+                                                @error('name')
+                                                    <div class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </div>
+                                                @enderror
                                             </div>
                                             <div class="form-group">
                                                 <label for="text">Username</label>
-                                                <input id="text" type="text" class="form-control" name="username" tabindex="1" required autofocus>
+                                                <input id="text" type="text" class="form-control @error('username') is-invalid @enderror" name="username" tabindex="1" value="{{ old('username') }}">
+                                                @error('username')
+                                                    <div class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </div>
+                                                @enderror
                                             </div>
                                             <div class="form-group">
                                                 <label for="text">Email</label>
-                                                <input id="text" type="text" class="form-control" name="email" tabindex="1" required autofocus>
+                                                <input id="text" type="text" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" tabindex="1">
+                                                @error('email')
+                                                    <div class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </div>
+                                                @enderror
                                             </div>
                                             <div class="form-group">
                                                 <div class="d-block">
                                                     <label for="password" class="control-label">Password</label>
                                                 </div>
-                                                <input id="password" type="password" class="form-control" name="password" tabindex="2" required>
+                                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" tabindex="2">
+                                                @error('password')
+                                                    <div class="invalid-feedback">
+                                                        {{ $message }}
+                                                    </div>
+                                                @enderror
                                                 {{-- <div class="invalid-feedback">
                                                     please fill in your password
                                                 </div> --}}

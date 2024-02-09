@@ -98,18 +98,21 @@
               <a href="#">UDS</a>
             </div>
             <ul class="sidebar-menu">
-              <li class="menu-header">Menu</li>
-              <li class="{{ request()->is('auth/dashboard') ? 'active' : '' }}"><a class="nav-link" href="{{ route('dashboard') }}"><i class="fas fa-chart-bar"></i><span>Dashboard</span></a></li>
-              <li class="dropdown {{ request()->is('auth/document/*') ? 'active' : '' }}">
-                <a href="#" class="nav-link has-dropdown"><i class="fas fa-file-alt"></i> <span>Data Dokumen</span></a>
-                <ul class="dropdown-menu">
-                    <li class="{{ ($menu == '1') ? 'active' : '' }}" ><a class="nav-link" href="{{ route('index.document', 1) }}">MOA</a></li>
-                    <li class="{{ ($menu == '2') ? 'active' : '' }}" ><a class="nav-link" href="{{ route('index.document', 2) }}">MOU</a></li>
-                    <li class="{{ ($menu == '3') ? 'active' : '' }}"><a class="nav-link" href="{{ route('index.document', 3) }}">IA</a></li>
-                </ul>
-            </li>
-            <li class="{{ request()->is('auth/document-filter*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('filter.document') }}"><i class="fas fa-folder-open"></i><span>Filter Dokumen</span></a></li>
-            <li class="{{ request()->is('auth/partner*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('index.partner') }}"><i class="fas fa-users"></i><span>Mitra Kerja</span></a></li>
+                <li class="menu-header">Menu</li>
+                <li class="{{ request()->is('auth/dashboard') ? 'active' : '' }}"><a class="nav-link" href="{{ route('dashboard') }}"><i class="fas fa-chart-bar"></i><span>Dashboard</span></a></li>
+                @if (Auth::user()->hasAnyRole('admin'))
+                    <li class="{{ request()->is('auth/data-master-user*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('index.master.user') }}"><i class="fas fa-user-cog"></i><span>Data Master User</span></a></li>
+                @endif
+                <li class="dropdown {{ request()->is('auth/document/*') ? 'active' : '' }}">
+                    <a href="#" class="nav-link has-dropdown"><i class="fas fa-file-alt"></i> <span>Data Dokumen</span></a>
+                    <ul class="dropdown-menu">
+                        <li class="{{ ($menu == '1') ? 'active' : '' }}" ><a class="nav-link" href="{{ route('index.document', 1) }}">MOA</a></li>
+                        <li class="{{ ($menu == '2') ? 'active' : '' }}" ><a class="nav-link" href="{{ route('index.document', 2) }}">MOU</a></li>
+                        <li class="{{ ($menu == '3') ? 'active' : '' }}"><a class="nav-link" href="{{ route('index.document', 3) }}">IA</a></li>
+                    </ul>
+                </li>
+                <li class="{{ request()->is('auth/document-filter*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('filter.document') }}"><i class="fas fa-folder-open"></i><span>Filter Dokumen</span></a></li>
+                <li class="{{ request()->is('auth/partner*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('index.partner') }}"><i class="fas fa-users"></i><span>Mitra Kerja</span></a></li>
             </ul>
         </aside>
         </div>

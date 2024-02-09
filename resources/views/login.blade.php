@@ -68,9 +68,9 @@
                                         </form>
                                     </div>
                                 </div>
-                                {{-- <div class="mt-5 text-muted text-center">
+                                <div class="mt-5 text-muted text-center">
                                     Don't have an account? <a href="{{ route('view.registrasi') }}">Create One</a>
-                                </div> --}}
+                                </div>
                             <div class="simple-footer">
                             </div>
                         </div>

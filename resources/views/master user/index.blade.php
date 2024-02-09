@@ -35,9 +35,9 @@
                                     <td>{{ $data->name }}</td>
                                     <td>{{ $data->username }}</td>
                                     <td>{{ $data->email }}</td>
-                                    @if ($data->role_id == 1)
+                                    @if ($data->getRoleNames()->first() == 'admin')
                                         <td><span class="badge badge-danger">ADMIN</span></td>
-                                    @elseif ($data->role_id == 2)
+                                    @elseif ($data->getRoleNames()->first() == 'user')
                                         <td><span class="badge badge-success">USER</span></td>
                                     @endif
                                     {{-- <td>

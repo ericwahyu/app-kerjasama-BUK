@@ -32,7 +32,7 @@ class NotificationDocument extends Command
     public function handle()
     {
         //
-        $userAdmin = User::all();
+        $userAdmin = User::role('admin')->get();
         $data = Document::whereStatus('aktif')->get();
 
         $start = Carbon::parse(date('Y-m-d', strtotime(Carbon::now())));;

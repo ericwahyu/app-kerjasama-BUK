@@ -2,9 +2,11 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DocumentController;
+use App\Http\Controllers\MasterUserController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PartnerController;
 use App\Models\Document;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,20 +27,29 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [AuthController::class, 'viewLogin'])->name('view.login');
 
 Route::controller(AuthController::class)->prefix('/no-auth')->group(function () {
+    Route::get('/registrasi', [AuthController::class, 'viewRegister'])->name('view.registrasi');
+    Route::post('/store-registrasi', [AuthController::class, 'register'])->name('send.register');
     Route::post('/store-login', 'login')->name('store.login');
 });
 
 Route::middleware('auth')->prefix('/auth')->group(function () {
     Route::get('/dashboard', function () {
+        $countUSER  = User::all();
         $countMOA  = Document::whereTypeId(1)->get();
         $countMOU  = Document::whereTypeId(2)->get();
         $countIA   = Document::whereTypeId(3)->get();
         return view('dashboard', array(
+            'countUSER' => count($countUSER),
             'countMOA' => count($countMOA),
             'countMOU' => count($countMOU),
             'countIA' => count($countIA),
             'menu' => '1234567890',
-        ));})->name('dashboard');
+        ));
+    })->name('dashboard');
+
+    Route::controller(MasterUserController::class)->prefix('/data-master-user')->middleware('role:admin')->group(function () {
+        Route::get('/', 'index')->name('index.master.user');
+    });
 
     Route::controller(DocumentController::class)->prefix('/document')->group(function () {
         Route::get('/{type}', 'index')->name('index.document');
