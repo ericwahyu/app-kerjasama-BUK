@@ -4,10 +4,12 @@
 <section class="section">
     <div class="section-header">
         <h1>Data Dokumen <b>{{ $type->name }}</b></h1>
-        <div class="section-header-button">
-            <a href="{{ route('create.document', $type->id) }}" class="btn btn-primary"
-                title="Tambah Daftar Pertanyaan">Tambah</a>
-        </div>
+        @if (Auth::user()->hasAnyRole('admin'))
+            <div class="section-header-button">
+                <a href="{{ route('create.document', $type->id) }}" class="btn btn-primary"
+                    title="Tambah Daftar Pertanyaan">Tambah</a>
+            </div>
+        @endif
     </div>
     <div class="section-body">
         <div class="card">
@@ -69,14 +71,16 @@
                                     @endif
                                     <td>
                                         <a href="{{ route('show.document', $data->id) }}" class="btn btn-success" title="Detail Data"><i class="fa fa-eye"></i></a>
-                                        <a href="{{ route('download.document', $data->id) }}" class="btn btn-info" title="Unduh File Dokumen"><i class="fa fa-download"></i></a>
-                                        <a href="{{ route('edit.document', $data->id) }}" class="btn btn-warning" title="Edit Data"><i class="far fa-edit"></i></a>
-                                        <form id="delete" action="{{ route('destroy.document', $data->id) }}" method="post">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger mr-2 show_confirm"
-                                                data-toggle="tooltip" title="Hapus Data"><i class="far fa-trash-alt"></i></button>
-                                        </form>
+                                        @if (Auth::user()->hasAnyRole('admin'))
+                                            <a href="{{ route('download.document', $data->id) }}" class="btn btn-info" title="Unduh File Dokumen"><i class="fa fa-download"></i></a>
+                                            <a href="{{ route('edit.document', $data->id) }}" class="btn btn-warning" title="Edit Data"><i class="far fa-edit"></i></a>
+                                            <form id="delete" action="{{ route('destroy.document', $data->id) }}" method="post">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger mr-2 show_confirm"
+                                                    data-toggle="tooltip" title="Hapus Data"><i class="far fa-trash-alt"></i></button>
+                                            </form>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach

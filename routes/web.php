@@ -53,25 +53,25 @@ Route::middleware('auth')->prefix('/auth')->group(function () {
 
     Route::controller(DocumentController::class)->prefix('/document')->group(function () {
         Route::get('/{type}', 'index')->name('index.document');
-        Route::get('/create/{type}', 'create')->name('create.document');
-        Route::post('/store', 'store')->name('store.document');
+        Route::get('/create/{type}', 'create')->name('create.document')->middleware('role:admin');
+        Route::post('/store', 'store')->name('store.document')->middleware('role:admin');
         Route::get('/show/{document}', 'show')->name('show.document');
-        Route::get('/edit/{document}', 'edit')->name('edit.document');
-        Route::post('/update/{document}', 'update')->name('update.document');
-        Route::delete('/destroy/{document}', 'destroy')->name('destroy.document');
+        Route::get('/edit/{document}', 'edit')->name('edit.document')->middleware('role:admin');
+        Route::post('/update/{document}', 'update')->name('update.document')->middleware('role:admin');
+        Route::delete('/destroy/{document}', 'destroy')->name('destroy.document')->middleware('role:admin');
     });
 
-    Route::get('/document-download/{document}', [DocumentController::class, 'downloadFile'])->name('download.document');
+    Route::get('/document-download/{document}', [DocumentController::class, 'downloadFile'])->name('download.document')->middleware('role:admin');
     Route::get('/document-filter', [DocumentController::class, 'filter'])->name('filter.document');
-    Route::get('/document-export', [DocumentController::class, 'export'])->name('export.document');
+    Route::get('/document-export', [DocumentController::class, 'export'])->name('export.document')->middleware('role:admin');
 
     Route::controller(PartnerController::class)->prefix('/partner')->group(function () {
         route::get('/', 'index')->name('index.partner');
-        route::get('/create', 'create')->name('create.partner');
-        route::post('/store', 'store')->name('store.partner');
-        route::get('/edit/{partner}', 'edit')->name('edit.partner');
-        route::post('/update/{partner}', 'update')->name('update.partner');
-        route::delete('/destroy/{partner}', 'destroy')->name('destroy.partner');
+        route::get('/create', 'create')->name('create.partner')->middleware('role:admin');
+        route::post('/store', 'store')->name('store.partner')->middleware('role:admin');
+        route::get('/edit/{partner}', 'edit')->name('edit.partner')->middleware('role:admin');
+        route::post('/update/{partner}', 'update')->name('update.partner')->middleware('role:admin');
+        route::delete('/destroy/{partner}', 'destroy')->name('destroy.partner')->middleware('role:admin');
     });
 
     Route::get('/notification', [NotificationController::class, 'index'])->name('index.notification');

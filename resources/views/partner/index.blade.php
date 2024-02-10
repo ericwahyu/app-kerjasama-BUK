@@ -4,10 +4,12 @@
 <section class="section">
     <div class="section-header">
         <h1>Data <b>Mitra Kerja</b></h1>
-        <div class="section-header-button">
-            <a href="{{ route('create.partner') }}" class="btn btn-primary"
-                title="Tambah Daftar Pertanyaan">Tambah</a>
-        </div>
+        @if (Auth::user()->hasAnyRole('admin'))
+            <div class="section-header-button">
+                <a href="{{ route('create.partner') }}" class="btn btn-primary"
+                    title="Tambah Daftar Pertanyaan">Tambah</a>
+            </div>
+        @endif
     </div>
     <div class="section-body">
         <div class="card">
@@ -22,7 +24,9 @@
                                 <th>Negara</th>
                                 <th>Nomor Telepon</th>
                                 <th>Website</th>
-                                <th>Action</th>
+                                @if (Auth::user()->hasAnyRole('admin'))
+                                    <th>Action</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
@@ -38,16 +42,18 @@
                                     <td>{{ $data->country }}</td>
                                     <td>+62{{ $data->phone }}</td>
                                     <td>{{ $data->website }}</td>
-                                    <td>
-                                        {{-- <a href="#" class="btn btn-success" title="Detail Data"><i class="fa fa-eye"></i></a> --}}
-                                        <a href="{{ route('edit.partner', $data->id) }}" class="btn btn-warning" title="Edit Data"><i class="far fa-edit"></i></a>
-                                        <form id="delete" action="{{ route('destroy.partner', $data->id) }}" method="post">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger mr-2 show_confirm"
-                                                data-toggle="tooltip" title="Hapus Data"><i class="far fa-trash-alt"></i></button>
-                                        </form>
-                                    </td>
+                                    @if (Auth::user()->hasAnyRole('admin'))
+                                        <td>
+                                            {{-- <a href="#" class="btn btn-success" title="Detail Data"><i class="fa fa-eye"></i></a> --}}
+                                            <a href="{{ route('edit.partner', $data->id) }}" class="btn btn-warning" title="Edit Data"><i class="far fa-edit"></i></a>
+                                            <form id="delete" action="{{ route('destroy.partner', $data->id) }}" method="post">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger mr-2 show_confirm"
+                                                    data-toggle="tooltip" title="Hapus Data"><i class="far fa-trash-alt"></i></button>
+                                            </form>
+                                        </td>
+                                    @endif
                                 </tr>
                             @endforeach
                         </tbody>

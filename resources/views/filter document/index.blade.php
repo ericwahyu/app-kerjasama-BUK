@@ -45,7 +45,10 @@
                             </div>
                             <div class="form-group col-md-2">
                                 <button formaction="{{ route('filter.document') }}" type="submit" class="btn btn-primary" style="margin-top: 35px">Filter Data</button>
-                                <button formaction="{{ route('export.document') }}" type="submit" class="btn btn-info" style="margin-top: 35px; margin-left: 5px">Export Excel</button>
+                                @if (Auth::user()->hasAnyRole('admin'))
+                                    <button formaction="{{ route('export.document') }}" type="submit" class="btn btn-info" style="margin-top: 35px; margin-left: 5px">Export Excel</button>
+
+                                @endif
                             </div>
                         </div>
                     </form>

@@ -53,94 +53,95 @@
 
   <body>
     <div id="app">
-      <div class="main-wrapper main-wrapper-1">
-        <div class="navbar-bg"></div>
-        <nav class="navbar navbar-expand-lg main-navbar">
-          <form class="form-inline mr-auto">
-            <ul class="navbar-nav mr-3">
-              <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i class="fas fa-bars"></i></a></li>
-            </ul>
-            <div class="search-element">
-              <h5 style="margin-top: 12px; color: white">BUK (Badan Usaha Kerjasama)</h5>
-            </div>
-          </form>
-          <ul class="navbar-nav navbar-right">
-              <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown" class="nav-link notification-toggle" id="lonceng"><i class="far fa-bell"></i></a>
-                  <div class="dropdown-menu dropdown-list dropdown-menu-right">
-                      <div class="dropdown-header">Notifications
-                      </div>
-                      <div class="dropdown-list-content dropdown-list-icons" id="notifikasi">
-                      </div>
-                  </div>
-              </li>
-            <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-              <div class="d-sm-none d-lg-inline-block">Hi, {{ Auth::user()->name }}</div></a>
-              <div class="dropdown-menu dropdown-menu-right">
-                <div class="dropdown-divider"></div>
-                <form action="{{ route('logout') }}" method="post">
-                    @csrf
-                    <button type="submit" class="dropdown-item text-danger"><i class="fas fa-sign-out-alt"></i> Logout</button>
-                </form>
-              </div>
-            </li>
-          </ul>
-
-        </nav>
-        <div class="main-sidebar sidebar-style-2">
-          <aside id="sidebar-wrapper">
-            <div class="sidebar-brand">
-              {{-- <div class="login-brand" >
-              </div> --}}
-              <img src="{{ asset('assets/Universitas Dr. Soetomo.png') }}" alt="logo" width="30" class="shadow-light">
-              <a href="#" style="font-size: 12px">Universitas Dr. Soetomo</a>
-            </div>
-            <div class="sidebar-brand sidebar-brand-sm">
-              <a href="#">UDS</a>
-            </div>
-            <ul class="sidebar-menu">
-                <li class="menu-header">Menu</li>
-                <li class="{{ request()->is('auth/dashboard') ? 'active' : '' }}"><a class="nav-link" href="{{ route('dashboard') }}"><i class="fas fa-chart-bar"></i><span>Dashboard</span></a></li>
-                @if (Auth::user()->hasAnyRole('admin'))
-                    <li class="{{ request()->is('auth/data-master-user*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('index.master.user') }}"><i class="fas fa-user-cog"></i><span>Data Master User</span></a></li>
-                @endif
-                <li class="dropdown {{ request()->is('auth/document/*') ? 'active' : '' }}">
-                    <a href="#" class="nav-link has-dropdown"><i class="fas fa-file-alt"></i> <span>Data Dokumen</span></a>
-                    <ul class="dropdown-menu">
-                        <li class="{{ ($menu == '1') ? 'active' : '' }}" ><a class="nav-link" href="{{ route('index.document', 1) }}">MOA</a></li>
-                        <li class="{{ ($menu == '2') ? 'active' : '' }}" ><a class="nav-link" href="{{ route('index.document', 2) }}">MOU</a></li>
-                        <li class="{{ ($menu == '3') ? 'active' : '' }}"><a class="nav-link" href="{{ route('index.document', 3) }}">IA</a></li>
+        <div class="main-wrapper main-wrapper-1">
+            <div class="navbar-bg"></div>
+            <nav class="navbar navbar-expand-lg main-navbar">
+                <form class="form-inline mr-auto">
+                    <ul class="navbar-nav mr-3">
+                        <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i class="fas fa-bars"></i></a></li>
                     </ul>
-                </li>
-                <li class="{{ request()->is('auth/document-filter*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('filter.document') }}"><i class="fas fa-folder-open"></i><span>Filter Dokumen</span></a></li>
-                <li class="{{ request()->is('auth/partner*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('index.partner') }}"><i class="fas fa-users"></i><span>Mitra Kerja</span></a></li>
-            </ul>
-        </aside>
-        </div>
-
-        <!-- Main Content -->
-        <div class="main-content">
-            @yield('section')
-          {{-- <section class="section">
-            <div class="section-header">
-
+                    <div class="search-element">
+                    <h5 style="margin-top: 12px; color: white">BUK (Badan Usaha Kerjasama)</h5>
+                    </div>
+                </form>
+                <ul class="navbar-nav navbar-right">
+                    @if (Auth::user()->hasAnyRole('admin'))
+                        <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown" class="nav-link notification-toggle" id="lonceng"><i class="far fa-bell"></i></a>
+                            <div class="dropdown-menu dropdown-list dropdown-menu-right">
+                                <div class="dropdown-header">Notifications
+                                </div>
+                                <div class="dropdown-list-content dropdown-list-icons" id="notifikasi">
+                                </div>
+                            </div>
+                        </li>
+                    @endif
+                    <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
+                    <div class="d-sm-none d-lg-inline-block">Hi, {{ Auth::user()->name }}</div></a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <div class="dropdown-divider"></div>
+                        <form action="{{ route('logout') }}" method="post">
+                            @csrf
+                            <button type="submit" class="dropdown-item text-danger"><i class="fas fa-sign-out-alt"></i> Logout</button>
+                        </form>
+                    </div>
+                    </li>
+                </ul>
+            </nav>
+            <div class="main-sidebar sidebar-style-2">
+                <aside id="sidebar-wrapper">
+                    <div class="sidebar-brand">
+                    {{-- <div class="login-brand" >
+                    </div> --}}
+                        <img src="{{ asset('assets/Universitas Dr. Soetomo.png') }}" alt="logo" width="30" class="shadow-light">
+                        <a href="#" style="font-size: 12px">Universitas Dr. Soetomo</a>
+                    </div>
+                    <div class="sidebar-brand sidebar-brand-sm">
+                        <a href="#">UDS</a>
+                    </div>
+                    <ul class="sidebar-menu">
+                        <li class="menu-header">Menu</li>
+                        <li class="{{ request()->is('auth/dashboard') ? 'active' : '' }}"><a class="nav-link" href="{{ route('dashboard') }}"><i class="fas fa-chart-bar"></i><span>Dashboard</span></a></li>
+                        @if (Auth::user()->hasAnyRole('admin'))
+                            <li class="{{ request()->is('auth/data-master-user*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('index.master.user') }}"><i class="fas fa-user-cog"></i><span>Data Master User</span></a></li>
+                        @endif
+                        <li class="dropdown {{ request()->is('auth/document/*') ? 'active' : '' }}">
+                            <a href="#" class="nav-link has-dropdown"><i class="fas fa-file-alt"></i> <span>Data Dokumen</span></a>
+                            <ul class="dropdown-menu">
+                                <li class="{{ ($menu == '1') ? 'active' : '' }}" ><a class="nav-link" href="{{ route('index.document', 1) }}">MOA</a></li>
+                                <li class="{{ ($menu == '2') ? 'active' : '' }}" ><a class="nav-link" href="{{ route('index.document', 2) }}">MOU</a></li>
+                                <li class="{{ ($menu == '3') ? 'active' : '' }}"><a class="nav-link" href="{{ route('index.document', 3) }}">IA</a></li>
+                            </ul>
+                        </li>
+                        <li class="{{ request()->is('auth/document-filter*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('filter.document') }}"><i class="fas fa-folder-open"></i><span>Filter Dokumen</span></a></li>
+                        <li class="{{ request()->is('auth/partner*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('index.partner') }}"><i class="fas fa-users"></i><span>Mitra Kerja</span></a></li>
+                    </ul>
+                </aside>
             </div>
 
-            <div class="section-body">
+            <!-- Main Content -->
+            <div class="main-content">
+                @yield('section')
+            {{-- <section class="section">
+                <div class="section-header">
+
+                </div>
+
+                <div class="section-body">
+                </div>
+            </section> --}}
             </div>
-          </section> --}}
+            <!-- Button trigger modal -->
+
+            {{-- <footer class="main-footer">
+            <div class="footer-left">
+                Copyright &copy; 2018 <div class="bullet"></div> Design By <a href="https://nauval.in/">Muhamad Nauval Azhar</a>
+            </div>
+            <div class="footer-right">
+
+            </div>
+            </footer> --}}
+            @yield('modal')
         </div>
-        <!-- Button trigger modal -->
-
-        {{-- <footer class="main-footer">
-          <div class="footer-left">
-            Copyright &copy; 2018 <div class="bullet"></div> Design By <a href="https://nauval.in/">Muhamad Nauval Azhar</a>
-          </div>
-          <div class="footer-right">
-
-          </div>
-        </footer> --}}
-        @yield('modal')
-      </div>
     </div>
 
     @yield('script')
