@@ -61,6 +61,7 @@ Route::middleware('auth')->prefix('/auth')->group(function () {
         Route::delete('/destroy/{document}', 'destroy')->name('destroy.document');
     });
 
+    Route::get('/document-download/{document}', [DocumentController::class, 'downloadFile'])->name('download.document');
     Route::get('/document-filter', [DocumentController::class, 'filter'])->name('filter.document');
     Route::get('/document-export', [DocumentController::class, 'export'])->name('export.document');
 

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('faculty')->nullable();
             $table->string('course')->nullable();
             $table->text('description')->nullable();
+            $table->text('file')->nullable();
             $table->text('partner')->nullable();
             $table->text('activity')->nullable();
             $table->enum('status', ['aktif', 'kadaluarsa'])->nullable();

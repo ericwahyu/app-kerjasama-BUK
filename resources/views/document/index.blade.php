@@ -69,6 +69,7 @@
                                     @endif
                                     <td>
                                         <a href="{{ route('show.document', $data->id) }}" class="btn btn-success" title="Detail Data"><i class="fa fa-eye"></i></a>
+                                        <a href="{{ route('download.document', $data->id) }}" class="btn btn-info" title="Unduh File Dokumen"><i class="fa fa-download"></i></a>
                                         <a href="{{ route('edit.document', $data->id) }}" class="btn btn-warning" title="Edit Data"><i class="far fa-edit"></i></a>
                                         <form id="delete" action="{{ route('destroy.document', $data->id) }}" method="post">
                                             @csrf

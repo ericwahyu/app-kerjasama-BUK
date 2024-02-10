@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Maatwebsite\Excel\Facades\Excel;
 
 class DocumentController extends Controller
@@ -50,10 +51,12 @@ class DocumentController extends Controller
         // dd($request);
         $request->validate([
             'instansi' => 'required',
-            'tglAwal' => 'required',
+            'tglAwal'  => 'required',
             'tglAkhir' => 'required',
+            'file'     => 'required|mimes:docx,doc,pdf',
         ]);
 
+        // dd($request);
         try {
             DB::transaction(function () use ($request) {
                 if($request->tglAkhir > $request->tglAwal){
@@ -71,6 +74,12 @@ class DocumentController extends Controller
                         $document->status = 'aktif';
                     }else{
                         $document->status = 'kadaluarsa';
+                    }
+                    if($request->hasFile('file')){
+                        $file = $request->file('file');
+                        $file_name = now()->timestamp .'.'. $file->getClientOriginalExtension();
+                        $file->move(public_path('storage/document'),$file_name);
+                        $document->file = $file_name;
                     }
                     $document->start_date = $request->tglAwal;
                     $document->end_date   = $request->tglAkhir;
@@ -132,8 +141,9 @@ class DocumentController extends Controller
         // dd($request);
         $request->validate([
             'instansi' => 'required',
-            'tglAwal' => 'required',
+            'tglAwal'  => 'required',
             'tglAkhir' => 'required',
+            'file'     => 'nullable|mimes:docx,doc,pdf',
         ]);
 
         try {
@@ -151,6 +161,17 @@ class DocumentController extends Controller
                         $document->status = 'aktif';
                     }else{
                         $document->status = 'kadaluarsa';
+                    }
+                    if($request->hasFile('file')){
+                        //delete file lama
+                        $filelama = public_path('storage/document/'.$document->file);
+                        File::delete($filelama);
+
+                        $file = $request->file('file');
+                        $file_name = now()->timestamp .'.'.$file->getClientOriginalExtension();
+                        // $file_name = $file->getClientOriginalName();
+                        $file->move(public_path('storage/document'),$file_name);
+                        $document->file = $file_name;
                     }
                     $document->start_date = $request->tglAwal;
                     $document->end_date   = $request->tglAkhir;
@@ -178,6 +199,11 @@ class DocumentController extends Controller
         $document->delete();
         return redirect()->route('index.document', $document->type->id)->with('success', 'Berhasil menghapus data !!');
 
+    }
+
+    public function downloadFile(Document $document)
+    {
+        return response()->download(public_path('storage/document/' . $document->file));
     }
 
     public function filter(Request $request)

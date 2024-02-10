@@ -9,7 +9,7 @@
             <h1>Edit Data Dokumen <b>{{ $document->type->name }}</b></h1>
         </div>
         <div class="section-body">
-            <form action="{{ route('update.document', $document->id) }}" method="post">
+            <form action="{{ route('update.document', $document->id) }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="card">
                     <div class="card-body">
@@ -111,6 +111,18 @@
                                 </div>
                                 @enderror
                             </div>
+                        </div>
+                        <div class="form-group">
+                            <label style="font-size: 16px" class="d-block">Unggah File Dokumen</label>
+                            <input type="file" class="form-control @error('file') is-invalid @enderror" name="file" {{ old('file') }}>
+                            <small id="passwordHelpBlock" class="form-text text-muted">
+                                File Dokumen sudah ada. Apakah yakin akan di ubah dan file lama akan terhapus !!
+                             </small>
+                            @error('file')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
                         </div>
                     <div class="card-footer text-right">
                         <button class="btn btn-primary mr-1" type="submit">Save Changes</button>
