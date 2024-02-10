@@ -53,7 +53,7 @@ class DocumentController extends Controller
             'instansi' => 'required',
             'tglAwal'  => 'required',
             'tglAkhir' => 'required',
-            'file'     => 'required|mimes:docx,doc,pdf',
+            'file'     => 'nullable|mimes:docx,doc,pdf',
         ]);
 
         // dd($request);
