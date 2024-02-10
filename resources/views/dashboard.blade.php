@@ -8,7 +8,7 @@
         <div class="row">
             @if (Auth::user()->hasAnyRole('admin'))
                 <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                    <a href="">
+                    <a href="{{ route('index.master.user') }}">
                         <div class="card card-statistic-1">
                             <div class="card-icon bg-danger">
                                 <i class="far fa-user"></i>
